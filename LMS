@@ -80,3 +80,171 @@ public class libraryManagementSystem {
         }
     }
 }
+
+
+package Module6;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+
+class Catalog {
+	//array list to store books in catalog
+    private ArrayList<Book> books;
+
+    public Catalog() {
+        books = new ArrayList<>();
+    }
+    //adding new book to catalog and assigning barcode/ID
+    public void addBook(String title, String author) {
+    	//assign barcode/ID to book
+        int id = books.size() + 1;
+        //new Book object
+        Book newBook = new Book(id, title, author);
+        //add book to Catalog
+        books.add(newBook);
+        System.out.println("Book added successfully. Barcode/ID assigned: " + id);
+    }
+    
+    //deleting book from Catalog by barcode/ID
+    public void deleteBookByBarcode(int barcode) {
+        Iterator<Book> iterator = books.iterator();
+        while (iterator.hasNext()) {
+            Book book = iterator.next();
+            //find book by barcode/ID
+            if (book.getBarcode() == barcode) {
+            	//remove book from catalog
+                iterator.remove();
+                //confirmation message
+                System.out.println("Book with barcode/ID " + barcode + " deleted successfully.");
+                return;
+            }
+        }
+        //print for books not found in current Catalog
+        System.out.println("Book with barcode/ID " + barcode + " not found.");
+    }
+
+    //delete book by title
+    public void deleteBookByTitle(String title) {
+        Iterator<Book> iterator = books.iterator();
+        while (iterator.hasNext()) {
+            Book book = iterator.next();
+            //match title of book
+            if (book.getTitle().equalsIgnoreCase(title)) {
+            	//remove book from Catalog
+                iterator.remove();
+                //print confirmation message
+                System.out.println(title + "' deleted from Catalog");
+                return;
+            }
+        }
+        //print error message
+        System.out.println(title + "' not found in Catalog.");
+    }
+
+    public void checkOutBook(String title) {
+        for (Book book : books) {
+        	//locate book by title
+            if (book.getTitle().equalsIgnoreCase(title)) {
+            	//check out book if available in Catalog
+                if (!book.isCheckedOut()) {
+                    book.checkOut();
+                    //confirmation message
+                    System.out.println(title + "' checked out successfully.");
+                    return;
+                } else {
+                	//error if book already checked out
+                    System.out.println(title + "' is not available to check out.");
+                    return;
+                }
+            }
+        }
+        //error message
+        System.out.println(title + "' not found in Catalog.");
+    }
+
+    public void checkInBook(String title) {
+        for (Book book : books) {
+        	//locate book by title
+            if (book.getTitle().equalsIgnoreCase(title)) {
+            	//check in book
+                if (book.isCheckedOut()) {
+                    book.checkIn();
+                    System.out.println(title + "' checked in successfully.");
+                    return;
+                } else {
+                	//error if book is already checked in
+                    System.out.println(title + "' is already checked in.");
+                    return;
+                }
+            }
+        }
+        //error message
+        System.out.println(title + "' not found in Catalog.");
+    }
+
+    public void displayCatalog() {
+    	//catalog display -empty catalog
+        if (books.isEmpty()) {
+            System.out.println("Catalog is empty.");
+        } else {
+        	//catalog display -current inventory
+            System.out.println("Current Catalog:");
+            for (Book book : books) {
+                System.out.println(book);
+            }
+        }
+    }
+	public ArrayList<Book> getBooks() {
+		return books;
+	}
+}
+
+package Module6;
+
+class Book {
+    private int id;
+    private String title;
+    private String author;
+    private int barcode;
+    private boolean checkedOut;
+
+    public Book(int id, String title, String author) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        this.barcode = id * 1; // barcode/ID generator
+        this.checkedOut = false;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public int getBarcode() {
+        return barcode;
+    }
+
+    public boolean isCheckedOut() {
+        return checkedOut;
+    }
+
+    public void checkOut() {
+        this.checkedOut = true;
+    }
+
+    public void checkIn() {
+        this.checkedOut = false;
+    }
+
+    public String toString() {
+        return "ID: " + id + ", Title: " + title + ", Author: " + author + ", Barcode: " + barcode + ", Checked Out: " + checkedOut;
+    }
+}
