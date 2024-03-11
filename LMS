@@ -1,0 +1,82 @@
+package Module6;
+
+import java.util.Scanner;
+
+public class libraryManagementSystem {
+    public static void main(String[] args) {
+    	
+    	//create catalog object to manage books
+        Catalog catalog = new Catalog();
+        
+        //create scanner object to read user input
+        Scanner scanner = new Scanner(System.in);
+    	
+
+       
+        //main menu loop
+        while (true) {
+        	//main menu display
+            System.out.println("\nLibrary Management System");
+            System.out.println("1. Add Book");
+            System.out.println("2. Delete Book by Barcode/ID");
+            System.out.println("3. Delete Book by Title");
+            System.out.println("4. Check Out Book");
+            System.out.println("5. Check In Book");
+            System.out.println("6. Display Catalog");
+            System.out.println("7. Exit");
+            System.out.print("Enter your choice: ");
+            
+            
+            //reading user input
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+            	//add new book to catalog by entering title and author
+                case 1:
+                    System.out.print("Enter book title: ");
+                    String title = scanner.nextLine();
+                    System.out.print("Enter author name: ");
+                    String author = scanner.nextLine();
+                    catalog.addBook(title, author);
+                    break;
+                //delete book by barcode/ID
+                case 2:
+                    System.out.print("Enter barcode/ID number to remove: ");
+                    int barcodeToRemove = scanner.nextInt();
+                    scanner.nextLine(); 
+                    catalog.deleteBookByBarcode(barcodeToRemove);
+                    break;
+                //delete book by title
+                case 3:
+                    System.out.print("Enter title to delete: ");
+                    String titleToRemove = scanner.nextLine();
+                    catalog.deleteBookByTitle(titleToRemove);
+                    break;
+                //check out book by book title
+                case 4:
+                    System.out.print("Enter book title to check out: ");
+                    String titleToCheckOut = scanner.nextLine();
+                    catalog.checkOutBook(titleToCheckOut);
+                    break;
+                //check in by book title
+                case 5:
+                    System.out.print("Enter book title to check in: ");
+                    String titleToCheckIn = scanner.nextLine();
+                    catalog.checkInBook(titleToCheckIn);
+                    break;
+                //display current book inventory
+                case 6:
+                    catalog.displayCatalog();
+                    break;
+                //exit program
+                case 7:
+                    System.out.println("Exiting Library Management System.");
+                    System.exit(0);
+                //user input request
+                default:
+                    System.out.println("Please enter a valid option.");
+            }
+        }
+    }
+}
