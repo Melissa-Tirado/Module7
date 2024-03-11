@@ -1,0 +1,52 @@
+package Module6;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+class LMSTest {
+
+	@Test //Adding a book to Catalog
+	public void testAddBook() {
+	    Catalog catalog = new Catalog();
+	    catalog.addBook("Sample Title", "Sample Author");
+	    assertEquals(1, catalog.getBooks().size());
+		}
+
+
+	@Test  //Removing book from Catalog by barcode/ID
+	public void testRemoveBookByBarcode() {
+		Catalog catalog = new Catalog();
+		catalog.addBook("Sample Title", "Sample Author");
+		catalog.deleteBookByBarcode(1); 
+		assertEquals(0, catalog.getBooks().size());
+		}
+
+	
+	@Test //Removing book from Catalog by Title
+	public void testRemoveBookByTitle() {
+		Catalog catalog = new Catalog();
+		catalog.addBook("Sample Title", "Sample Author");
+		catalog.deleteBookByTitle("Sample Title");
+		assertEquals(0, catalog.getBooks().size());
+		}
+	
+	
+	@Test //Checking out book
+	public void testCheckOutBook() {
+	    Catalog catalog = new Catalog();
+	    catalog.addBook("Sample Title", "Sample Author");
+	    catalog.checkOutBook("Sample Title");
+	    assertTrue(catalog.getBooks().get(0).isCheckedOut());
+		}
+
+	
+	@Test //Checking in book
+	public void testCheckInBook() {
+	    Catalog catalog = new Catalog();
+	    catalog.addBook("Sample Title", "Sample Author");
+	    catalog.checkOutBook("Sample Title");
+	    catalog.checkInBook("Sample Title");
+	    assertFalse(catalog.getBooks().get(0).isCheckedOut());
+	}
+}
